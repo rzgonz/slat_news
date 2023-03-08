@@ -1,0 +1,89 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-parcelize'
+}
+
+android {
+    namespace 'com.rzgonz.saltnews'
+    compileSdk AppConfig.CompileSdkVersion
+
+
+    defaultConfig {
+        applicationId "com.rzgonz.saltnews"
+        minSdk AppConfig.MinSdkVersion
+        targetSdk AppConfig.TargetSdkVersion
+        versionCode AppConfig.versionCode
+        versionName AppConfig.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.2.0'
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+}
+
+dependencies {
+
+    implementation Libraries.coreKtx
+    implementation Libraries.runtimeKtx
+
+    def composeBom = platform(Libraries.composeBom)
+    implementation composeBom
+    androidTestImplementation composeBom
+    implementation Libraries.compose_ui
+    implementation Libraries.compose_material
+    implementation Libraries.compose_material3
+    implementation Libraries.compose_icon
+    implementation Libraries.compose_icon_extended
+    implementation Libraries.compose_activity
+    implementation Libraries.compose_viewModel
+    implementation Libraries.compose_navigation
+    implementation Libraries.compose_glide
+
+
+    //Network
+    implementation Libraries.retrofit
+    implementation Libraries.gson
+    implementation Libraries.retrofitGson
+    implementation Libraries.okHttp3Log
+    implementation Libraries.okHttp3
+    implementation Libraries.koinCompose
+    implementation Libraries.koin
+
+
+    testImplementation(TestLibraries.junit)
+    testImplementation(TestLibraries.faker)
+    androidTestImplementation(InstrumentedTestLibraries.junit)
+    androidTestImplementation(InstrumentedTestLibraries.core)
+    androidTestImplementation Libraries.compose_unitTest
+    androidTestImplementation Libraries.compose_navigation_test
+    debugImplementation Libraries.compose_tooling
+    debugImplementation Libraries.compose_manifestTest
+
+}
